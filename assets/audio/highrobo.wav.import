@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/highrobo.wav-4326cf7f41cf80a30573d8592aeb8704.sample"
+
+[deps]
+
+source_file="res://assets/audio/highrobo.wav"
+dest_files=[ "res://.import/highrobo.wav-4326cf7f41cf80a30573d8592aeb8704.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
