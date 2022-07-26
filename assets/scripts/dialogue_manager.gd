@@ -10,7 +10,10 @@ onready var voice = $CanvasLayer/DialogueBlip
 export (String, FILE, "*.json") var diag_script
 
 var dialogues = []
-var cur_line = 0
+var cur_line = -2
+
+enum State {DISABLED,ENABLED}
+var cur_state = State.DISABLED
 
 var voice_bank = {
 	simon  =  load("res://assets/audio/maarte.wav"),
@@ -27,18 +30,17 @@ func _ready():
 #	pass
 
 func _input(event):
-	if event.is_action_released("next_dialogue"):
+	if event.is_action_released("next_dialogue") and cur_state == State.ENABLED:
 		advance()
 
-func play():
-	dialogues = load_dialogue()
-	title.text = dialogues[cur_line]['title']
-	text.text = dialogues[cur_line]['text']
+func play(fp='res://scenes/dialogue/001_hallway.json'):
+	dialogues = load_dialogue(fp)
 
 func advance():
 	cur_line += 1
-	
-	if (cur_line < dialogues.size()):
+	if (cur_line == -1):
+		anim.play("open_dialogue")
+	elif (cur_line < dialogues.size()):
 		title.text = dialogues[cur_line]['title']
 		text.text = dialogues[cur_line]['text']
 		
@@ -55,11 +57,11 @@ func advance():
 	
 	
 
-func load_dialogue():
+func load_dialogue(fp='res://scenes/dialogue/001_hallway.json'):
 	var file = File.new()
 	
-	if file.file_exists(diag_script):
-		file.open(diag_script, file.READ)
+	if file.file_exists(fp):
+		file.open(fp, file.READ)
 		return parse_json(file.get_as_text())
 	else:
 		print('Error, no file for dialogue manager.')
@@ -72,4 +74,5 @@ func _on_Tween_tween_step(object, key, elapsed, value):
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	pass # Replace with function body.
+	if anim_name ==  'open_dialogue':
+		advance()
