@@ -1,0 +1,23 @@
+[
+    {   "title": "Flynn", 
+        "text": "What a week huh?"
+    },
+
+    {
+        "title": "Simon",
+        "text": "Beggars can't be choosers.",
+        "delay": 4
+    },
+
+    {
+        "title": "Flynn",
+        "text": "Did you study for 21st Literature?"
+    },
+
+    {
+        "title": "Simon",
+        "text": "(Huh, what for?)"
+    }
+
+
+]
