@@ -67,6 +67,8 @@ margin_top = 13.0
 margin_right = 158.0
 margin_bottom = 29.0
 theme = ExtResource( 3 )
+min_value = -80.0
+max_value = 6.0
 
 [node name="MusicLabel" type="Label" parent="Menu/ColorRect/VBoxContainer"]
 margin_top = 29.0
@@ -82,6 +84,8 @@ margin_top = 42.0
 margin_right = 158.0
 margin_bottom = 58.0
 theme = ExtResource( 3 )
+min_value = -80.0
+max_value = 6.0
 
 [node name="SFXLabel" type="Label" parent="Menu/ColorRect/VBoxContainer"]
 margin_top = 58.0
@@ -97,6 +101,8 @@ margin_top = 71.0
 margin_right = 158.0
 margin_bottom = 87.0
 theme = ExtResource( 3 )
+min_value = -80.0
+max_value = 6.0
 
 [node name="ButtonBG" parent="Menu/ColorRect" instance=ExtResource( 5 )]
 anchor_left = 1.0
