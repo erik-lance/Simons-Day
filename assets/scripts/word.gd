@@ -17,7 +17,7 @@ func _ready():
 	set_word(word)
 
 func get_word(): return word
-func set_word(w): 
+func set_word(w):
 	word = w
 	set_label()
 
@@ -25,6 +25,16 @@ func _physics_process(delta):
 	self.position.x -= speed*delta
 
 func set_label():
+	var size = text.get_font("font").get_string_size(word)
+	text.rect_size.x = size.x + 1
+	print(size)
+	text.rect_position.x = -size.x / 2
+	text.rect_position.y = -size.y / 2 + -size.y
+	
+	var shape = RectangleShape2D.new()
+	shape.set_extents(Vector2(size.x / 2, size.y / 2))
+	$KinematicBody2D/CollisionShape2D.set_shape(shape)
+	
 	code_text = word
 	text.parse_bbcode(set_center_tags(code_text))
 
@@ -35,13 +45,14 @@ func set_next_character(next_ch_idx: int):
 	var red_text = ""
 
 	if next_ch_idx != code_text.length():
+		self.z_index = 50
 		red_text = get_bbcode_color_tag(red) + code_text.substr(next_ch_idx + 1, code_text.length() - next_ch_idx + 1) + get_bbcode_end_color_tag()
 
 	text.parse_bbcode(set_center_tags(blue_text + green_text + red_text))
 
 
 func set_center_tags(string_to_center: String):
-	return "[center]" + string_to_center + "[/center]"
+	return "[center]\n" + string_to_center + "[/center]"
 
 
 func get_bbcode_color_tag(color: Color) -> String:
