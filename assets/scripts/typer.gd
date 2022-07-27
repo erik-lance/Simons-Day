@@ -23,6 +23,14 @@ func _ready():
 	f.close()
 	
 
+func begin_game():
+	$Timer.start()
+	$Timer2.start()
+
+func word_burst():
+	$Timer.wait_time = 2.2
+	$Timer2.wait_time = 1.4
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -64,7 +72,22 @@ func _unhandled_input(event):
 				print('Type fail.')
 		
 
+func instantiate_word():
+	var n = randi() % 960
+	var y = randi() % 50 + 1
+	var x = 256
+	y += 40
+	
+	var loaded_word = load("res://scenes/typing/word.tscn").instance()
+	cur_words.add_child(loaded_word)
+	loaded_word.set_word(pos_words[n])
+	loaded_word.position.y = y
+	
 
+func _on_Timer_timeout():
+	instantiate_word()
 
+func _on_Timer2_timeout():
+	instantiate_word()
 
 
