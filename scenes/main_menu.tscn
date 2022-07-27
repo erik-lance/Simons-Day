@@ -16,7 +16,12 @@ font_data = ExtResource( 4 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="Menu" type="TextureRect" parent="."]
+[node name="SceneManager" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="CurrentScene" type="Node2D" parent="SceneManager"]
+
+[node name="Menu" type="TextureRect" parent="SceneManager/CurrentScene"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 256.0
@@ -30,7 +35,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Buttons" type="ColorRect" parent="Menu"]
+[node name="Buttons" type="ColorRect" parent="SceneManager/CurrentScene/Menu"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 13.0
@@ -42,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/Buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SceneManager/CurrentScene/Menu/Buttons"]
 anchor_left = 0.5
 anchor_top = 0.454545
 anchor_right = 0.5
@@ -57,12 +62,12 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Start" parent="Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
+[node name="Start" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
 margin_right = 63.0
 margin_bottom = 17.0
 size_flags_vertical = 3
 
-[node name="Start" type="Button" parent="Menu/Buttons/VBoxContainer/Start"]
+[node name="Start" type="Button" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Start"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -11.0
@@ -77,13 +82,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Freeplay" parent="Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
+[node name="Freeplay" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
 margin_top = 18.0
 margin_right = 63.0
 margin_bottom = 36.0
 size_flags_vertical = 3
 
-[node name="Freeplay" type="Button" parent="Menu/Buttons/VBoxContainer/Freeplay"]
+[node name="Freeplay" type="Button" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Freeplay"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -11.0
@@ -97,13 +102,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Settings" parent="Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
+[node name="Settings" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
 margin_top = 37.0
 margin_right = 63.0
 margin_bottom = 54.0
 size_flags_vertical = 3
 
-[node name="Settings" type="Button" parent="Menu/Buttons/VBoxContainer/Settings"]
+[node name="Settings" type="Button" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Settings"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -11.0
@@ -118,13 +123,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quit" parent="Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
+[node name="Quit" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer" instance=ExtResource( 7 )]
 margin_top = 55.0
 margin_right = 63.0
 margin_bottom = 73.0
 size_flags_vertical = 3
 
-[node name="Quit" type="Button" parent="Menu/Buttons/VBoxContainer/Quit"]
+[node name="Quit" type="Button" parent="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Quit"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -11.0
@@ -139,7 +144,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Menu"]
+[node name="Title" type="Label" parent="SceneManager/CurrentScene/Menu"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -111.5
@@ -156,18 +161,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SceneManager" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="CurrentScene" type="Node2D" parent="SceneManager"]
-
 [node name="AudioManager" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
 [node name="Music" type="AudioStreamPlayer2D" parent="AudioManager"]
 bus = "Music"
 
-[connection signal="button_up" from="Menu/Buttons/VBoxContainer/Start/Start" to="." method="_on_Start_button_up"]
-[connection signal="button_up" from="Menu/Buttons/VBoxContainer/Freeplay/Freeplay" to="." method="_on_Freeplay_button_up"]
-[connection signal="button_up" from="Menu/Buttons/VBoxContainer/Settings/Settings" to="." method="_on_Settings_button_up"]
-[connection signal="button_up" from="Menu/Buttons/VBoxContainer/Quit/Quit" to="." method="_on_Quit_button_up"]
+[connection signal="button_up" from="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Start/Start" to="." method="_on_Start_button_up"]
+[connection signal="button_up" from="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Freeplay/Freeplay" to="." method="_on_Freeplay_button_up"]
+[connection signal="button_up" from="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Settings/Settings" to="." method="_on_Settings_button_up"]
+[connection signal="button_up" from="SceneManager/CurrentScene/Menu/Buttons/VBoxContainer/Quit/Quit" to="." method="_on_Quit_button_up"]
