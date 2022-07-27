@@ -1,6 +1,8 @@
 extends Node2D
 
-onready var pos_words = "res://assets/data/positive_adjectives.txt"
+onready var pos_words_file = "res://assets/data/positive_adjectives.txt"
+var pos_words = {}
+
 onready var cur_words = $WordsContainer
 
 var selected_word = null
@@ -8,7 +10,18 @@ var cur_letter_idx = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	
+	# Loads all words into pos_words array
+	var f = File.new()
+	var idx = 0
+	f.open(pos_words_file, File.READ)
+	
+	while not  f.eof_reached():
+		var line = f.get_line()
+		pos_words[idx] = line
+		idx += 1
+	f.close()
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
