@@ -1,8 +1,84 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://themes/tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/actors/simon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/actors/unknown.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/scripts/freeplay.gd" type="Script" id=4]
+[ext_resource path="res://assets/fonts/Daydream.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://scenes/typing/typing_game.tscn" type="PackedScene" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "begin_game"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Intro/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "start", "3", "2", "1", "Begin!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Intro/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Intro/ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.501961 ), Color( 0, 0, 0, 0.501961 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "waiting"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Intro/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.67451 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Intro/Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "ready?" ]
+}
 
 [node name="FreePlay" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -10,3 +86,54 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 131072, 10, 0, 131073, 10, 0, 131074, 9, 0, 131075, 10, 0, 131076, 10, 0, 131077, 9, 0, 131078, 10, 0, 131079, 10, 0, 131080, 10, 0, 131081, 10, 0, 131082, 9, 0, 131083, 10, 0, 131084, 10, 0, 131085, 9, 0, 131086, 10, 0, 131087, 10, 0, 196608, 5, 0, 196609, 3, 0, 196610, 1, 0, 196611, 1, 0, 196612, 1, 0, 196613, 1, 0, 196614, 1, 0, 196615, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 196619, 7, 0, 196620, 1, 0, 196621, 1, 0, 196622, 5, 0, 196623, 5, 0, 262144, 4, 0, 262145, 4, 0, 262146, 4, 0, 262147, 4, 0, 262148, 4, 0, 262149, 4, 0, 262150, 5, 0, 262151, 6, 0, 262152, 4, 0, 262153, 4, 0, 262154, 4, 0, 262155, 4, 0, 262156, 4, 0, 262157, 4, 0, 262158, 5, 0, 262159, 5, 0, 327680, 1, 0, 327681, 5, 0, 327682, 5, 0, 327683, 4, 0, 327684, 4, 0, 327685, 4, 0, 327686, 4, 0, 327687, 5, 0, 327688, 1, 0, 327689, 5, 0, 327690, 1, 0, 327691, 5, 0, 327692, 5, 0, 327693, 5, 0, 327694, 5, 0, 327695, 4, 0, 393216, 1, 0, 393217, 1, 0, 393218, 1, 0, 393219, 2, 0, 393220, 1, 0, 393221, 1, 0, 393222, 5, 0, 393223, 5, 0, 393224, 1, 0, 393225, 5, 0, 393226, 4, 0, 393227, 4, 0, 393228, 4, 0, 393229, 3, 0, 393230, 5, 0, 393231, 4, 0 )
+
+[node name="Simon" parent="." instance=ExtResource( 2 )]
+
+[node name="Challenger" type="Node2D" parent="."]
+position = Vector2( 186, 70 )
+
+[node name="Unknown" parent="Challenger" instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+
+[node name="AnimatedSprite" parent="Challenger/Unknown" index="0"]
+frame = 2
+flip_h = true
+
+[node name="TypeHandler" parent="." instance=ExtResource( 6 )]
+
+[node name="Intro" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Intro"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Intro"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -76.5
+margin_top = -11.0
+margin_right = 76.5
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 1 )
+text = "start"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/begin_game = SubResource( 2 )
+anims/waiting = SubResource( 3 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+
+[editable path="Simon"]
+[editable path="Challenger/Unknown"]
