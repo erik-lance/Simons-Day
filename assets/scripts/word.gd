@@ -1,0 +1,52 @@
+extends Node2D
+
+export (Color) var blue = Color("#4682b4")
+export (Color) var green = Color("#639765")
+export (Color) var red = Color("#a65455")
+
+export (String) var word
+onready var text = $Label
+onready var code_text = text.text
+
+onready var audio = $AudioStreamPlayer
+
+var speed = 10
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	set_word(word)
+
+func get_word(): return word
+func set_word(w): 
+	word = w
+	set_label()
+
+func _physics_process(delta):
+	self.position.x -= speed*delta
+
+func set_label():
+	code_text = word
+	text.parse_bbcode(set_center_tags(code_text))
+
+# Code for setting the bbcode
+func set_next_character(next_ch_idx: int):
+	var blue_text = get_bbcode_color_tag(blue) + code_text.substr(0, next_ch_idx) + get_bbcode_end_color_tag()
+	var green_text = get_bbcode_color_tag(green) + code_text.substr(next_ch_idx, 1) + get_bbcode_end_color_tag()
+	var red_text = ""
+
+	if next_ch_idx != code_text.length():
+		red_text = get_bbcode_color_tag(red) + code_text.substr(next_ch_idx + 1, code_text.length() - next_ch_idx + 1) + get_bbcode_end_color_tag()
+
+	text.parse_bbcode(set_center_tags(blue_text + green_text + red_text))
+
+
+func set_center_tags(string_to_center: String):
+	return "[center]" + string_to_center + "[/center]"
+
+
+func get_bbcode_color_tag(color: Color) -> String:
+	return "[color=#" + color.to_html(false) + "]"
+
+
+func get_bbcode_end_color_tag() -> String:
+	return "[/color]"
