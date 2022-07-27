@@ -5,6 +5,13 @@ var pos_words = {}
 
 onready var cur_words = $WordsContainer
 
+onready var audio = $AudioStreamPlayer
+var sound_bank = {
+	good = load("res://assets/audio/highrobo.wav"),
+	bad = load("res://assets/audio/bad_action.wav"),
+	done = load("res://assets/audio/complete_action.wav")
+}
+
 var selected_word = null
 var cur_letter_idx = -1
 
@@ -60,17 +67,28 @@ func _unhandled_input(event):
 			var word = selected_word.get_word()
 			var next_ch = word.substr(cur_letter_idx,1)
 			if key_typed == next_ch:
+				play_sound(1)
 				cur_letter_idx += 1
 				selected_word.set_next_character(cur_letter_idx)
 				
 				# If completed word
 				if cur_letter_idx == word.length():
+					play_sound(2)
 					cur_letter_idx = -1
 					selected_word.queue_free()
 					selected_word = null
 			else:
+				play_sound(0)
 				print('Type fail.')
 		
+
+
+func play_sound(success):
+	match(success):
+		0: audio.stream = sound_bank.bad
+		1: audio.stream = sound_bank.good
+		2: audio.stream = sound_bank.done
+	audio.play()
 
 func instantiate_word():
 	var n = randi() % 960

@@ -8,8 +8,6 @@ export (String) var word
 onready var text = $Label
 onready var code_text = text.text
 
-onready var audio = $AudioStreamPlayer
-
 var speed = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -49,7 +47,6 @@ func set_next_character(next_ch_idx: int):
 		red_text = get_bbcode_color_tag(red) + code_text.substr(next_ch_idx + 1, code_text.length() - next_ch_idx + 1) + get_bbcode_end_color_tag()
 
 	text.parse_bbcode(set_center_tags(blue_text + green_text + red_text))
-
 
 func set_center_tags(string_to_center: String):
 	return "[center]\n" + string_to_center + "[/center]"
