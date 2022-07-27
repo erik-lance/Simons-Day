@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var pos_words = "res://assets/data/positive_adjectives.txt"
 onready var cur_words = $WordsContainer
 
 var selected_word = null
@@ -20,7 +21,6 @@ func retarget(ch):
 		var next_char = text.substr(0, 1)
 		
 		if next_char == ch:
-			print("found new enemy that starts with %s" % next_char)
 			selected_word = word
 			cur_letter_idx = 1
 			selected_word.set_next_character(cur_letter_idx)
@@ -29,10 +29,29 @@ func retarget(ch):
 
 
 func _unhandled_input(event):
-	if event is InputEventKey and not event.is_pressed(): 
+	if event is InputEventKey and not event.is_pressed() and not event.is_echo(): 
 		var typed_event = event as InputEventKey
-		var key_typed = PoolByteArray([typed_event.unicode]).get_string_from_utf8()
-		
+		var key_typed = PoolByteArray([typed_event.scancode]).get_string_from_utf8().to_lower()
+
 		if selected_word == null:
-			retarget()
+			retarget(key_typed)
+		else:
+			var word = selected_word.get_word()
+			var next_ch = word.substr(cur_letter_idx,1)
+			if key_typed == next_ch:
+				cur_letter_idx += 1
+				selected_word.set_next_character(cur_letter_idx)
+				
+				# If completed word
+				if cur_letter_idx == word.length():
+					cur_letter_idx = -1
+					selected_word.queue_free()
+					selected_word = null
+			else:
+				print('Type fail.')
 		
+
+
+
+
+
