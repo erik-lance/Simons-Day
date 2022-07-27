@@ -1,9 +1,9 @@
 extends Node2D
 
-var class_cell = "res://scenes/classroom_cell.tscn"
-var locker_cell_1 = "res://scenes/locker_cell.tscn"
-var locker_cell_2 = "res://scenes/locker_cell_2.tscn"
-var window_cell = "res://scenes/window_cell.tscn"
+var class_cell = "res://scenes/cells/classroom_cell.tscn"
+var locker_cell_1 = "res://scenes/cells/locker_cell.tscn"
+var locker_cell_2 = "res://scenes/cells/locker_cell_2.tscn"
+var window_cell = "res://scenes/cells/window_cell.tscn"
 
 onready var cell = $Cells
 onready var cell_1 = $"Cells/Cell 1"
