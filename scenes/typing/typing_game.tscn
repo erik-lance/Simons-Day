@@ -32,3 +32,4 @@ __meta__ = {
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="area_entered" from="StaticBody2D" to="." method="_on_StaticBody2D_area_entered"]

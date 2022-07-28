@@ -1,5 +1,7 @@
 extends Node2D
 
+signal word_hit(w)
+
 onready var pos_words_file = "res://assets/data/positive_adjectives.txt"
 var pos_words = {}
 
@@ -80,6 +82,7 @@ func _unhandled_input(event):
 					selected_word = null
 			else:
 				play_sound(0)
+				selected_word.stutter()
 				print('Type fail.')
 		
 
@@ -109,4 +112,5 @@ func _on_Timer_timeout():
 func _on_Timer2_timeout():
 	instantiate_word()
 
-
+func _on_StaticBody2D_area_entered(area):
+	emit_signal("word_hit",area.get_parent().get_word())
