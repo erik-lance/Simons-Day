@@ -8,11 +8,15 @@ export (String) var word
 onready var text = $Label
 onready var code_text = text.text
 
-var speed = 10
+export (int) var orig_speed = 10
+export (int) var speed = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_word(word)
+
+func set_orig_speed(s): orig_speed = s
+func set_speed(s): speed = s
 
 func get_word(): return word
 func set_word(w):
@@ -25,13 +29,12 @@ func _physics_process(delta):
 func set_label():
 	var size = text.get_font("font").get_string_size(word)
 	text.rect_size.x = size.x + 1
-	print(size)
 	text.rect_position.x = -size.x / 2
 	text.rect_position.y = -size.y / 2 + -size.y
 	
 	var shape = RectangleShape2D.new()
 	shape.set_extents(Vector2(size.x / 2, size.y / 2))
-	$KinematicBody2D/CollisionShape2D.set_shape(shape)
+	$Area2D/CollisionShape2D.set_shape(shape)
 	
 	code_text = word
 	text.parse_bbcode(set_center_tags(code_text))
@@ -58,3 +61,10 @@ func get_bbcode_color_tag(color: Color) -> String:
 
 func get_bbcode_end_color_tag() -> String:
 	return "[/color]"
+
+func stutter(s = 50):
+	speed = s
+	$Timer.start()
+
+func _on_Timer_timeout():
+	speed = orig_speed
