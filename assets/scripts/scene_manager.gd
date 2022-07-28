@@ -25,8 +25,10 @@ func remove_cur_scene():
 
 func _on_signal_scene(s):
 	var cur_signal_scene = null
+	print(s)
 	
 	match(s):
+		'menu': cur_signal_scene = scenes.menu
 		'start': cur_signal_scene = scenes.start
 		'freeplay': cur_signal_scene = scenes.freeplay
 		'settings': cur_signal_scene = scenes.settings
@@ -43,3 +45,7 @@ func load_scene(scene):
 	
 	var loaded_scene = load(scene).instance()
 	cur_scene_node.add_child(loaded_scene)
+	
+	if scene == scenes.menu or scene == scenes.settings:
+		loaded_scene.connect('btn',self,'_on_signal_scene')
+	

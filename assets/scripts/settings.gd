@@ -1,5 +1,7 @@
 extends Node2D
 
+signal btn(s)
+
 onready var master_slider = $Menu/ColorRect/VBoxContainer/Master
 onready var music_slider=  $Menu/ColorRect/VBoxContainer/Music
 onready var SFX_slider = $Menu/ColorRect/VBoxContainer/SFX
@@ -20,4 +22,4 @@ func _on_SFX_value_changed(value):
 	AudioServer.set_bus_volume_db(2, value)
 
 func _on_Button_button_up():
-	get_tree().change_scene_to(load("res://scenes/main_menu.tscn"))
+	emit_signal('btn','menu')
