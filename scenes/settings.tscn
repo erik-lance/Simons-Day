@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/sprites/menu.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/PixelOperator.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/scripts/settings.gd" type="Script" id=4]
 [ext_resource path="res://scenes/UI/ButtonBG.tscn" type="PackedScene" id=5]
 [ext_resource path="res://themes/menu_btn.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/audio/complete_action.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 12
@@ -16,7 +17,7 @@ font_data = ExtResource( 2 )
 [node name="Settings" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="Menu" type="TextureRect" parent="."]
+[node name="SettingsMenu" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 256.0
@@ -31,7 +32,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Menu"]
+[node name="ColorRect" type="ColorRect" parent="SettingsMenu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.678431, 0.411765, 0.235294, 0.521569 )
@@ -40,7 +41,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/ColorRect"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -54,7 +55,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MasterLabel" type="Label" parent="Menu/ColorRect/VBoxContainer"]
+[node name="MasterLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_right = 158.0
 margin_bottom = 13.0
 custom_fonts/font = SubResource( 1 )
@@ -62,7 +63,7 @@ text = "Master"
 align = 1
 valign = 1
 
-[node name="Master" type="HSlider" parent="Menu/ColorRect/VBoxContainer"]
+[node name="Master" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_top = 13.0
 margin_right = 158.0
 margin_bottom = 29.0
@@ -70,7 +71,7 @@ theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
-[node name="MusicLabel" type="Label" parent="Menu/ColorRect/VBoxContainer"]
+[node name="MusicLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_top = 29.0
 margin_right = 158.0
 margin_bottom = 42.0
@@ -79,7 +80,7 @@ text = "Music"
 align = 1
 valign = 1
 
-[node name="Music" type="HSlider" parent="Menu/ColorRect/VBoxContainer"]
+[node name="Music" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_top = 42.0
 margin_right = 158.0
 margin_bottom = 58.0
@@ -87,7 +88,7 @@ theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
-[node name="SFXLabel" type="Label" parent="Menu/ColorRect/VBoxContainer"]
+[node name="SFXLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_top = 58.0
 margin_right = 158.0
 margin_bottom = 71.0
@@ -96,7 +97,7 @@ text = "SFX"
 align = 1
 valign = 1
 
-[node name="SFX" type="HSlider" parent="Menu/ColorRect/VBoxContainer"]
+[node name="SFX" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_top = 71.0
 margin_right = 158.0
 margin_bottom = 87.0
@@ -104,7 +105,7 @@ theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
-[node name="ButtonBG" parent="Menu/ColorRect" instance=ExtResource( 5 )]
+[node name="ButtonBG" parent="SettingsMenu/ColorRect" instance=ExtResource( 5 )]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -114,7 +115,7 @@ margin_top = -21.0
 margin_right = -6.0
 margin_bottom = -4.0
 
-[node name="Button" type="Button" parent="Menu/ColorRect/ButtonBG"]
+[node name="Button" type="Button" parent="SettingsMenu/ColorRect/ButtonBG"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -130,7 +131,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[connection signal="value_changed" from="Menu/ColorRect/VBoxContainer/Master" to="." method="_on_Master_value_changed"]
-[connection signal="value_changed" from="Menu/ColorRect/VBoxContainer/Music" to="." method="_on_Music_value_changed"]
-[connection signal="value_changed" from="Menu/ColorRect/VBoxContainer/SFX" to="." method="_on_SFX_value_changed"]
-[connection signal="button_up" from="Menu/ColorRect/ButtonBG/Button" to="." method="_on_Button_button_up"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="SettingsMenu"]
+stream = ExtResource( 7 )
+bus = "SFX"
+
+[connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/Master" to="." method="_on_Master_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/Music" to="." method="_on_Music_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/SFX" to="." method="_on_SFX_value_changed"]
+[connection signal="button_up" from="SettingsMenu/ColorRect/ButtonBG/Button" to="." method="_on_Button_button_up"]
