@@ -11,7 +11,9 @@ onready var audio = $AudioStreamPlayer
 var sound_bank = {
 	good = load("res://assets/audio/highrobo.wav"),
 	bad = load("res://assets/audio/bad_action.wav"),
-	done = load("res://assets/audio/complete_action.wav")
+	done = load("res://assets/audio/complete_action.wav"),
+	small_hit = load("res://assets/audio/small_hit.wav"),
+	deep_hit = load("res://assets/audio/deep_hit.wav")
 }
 
 var selected_word = null
