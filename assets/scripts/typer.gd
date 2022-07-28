@@ -50,6 +50,7 @@ func retarget(ch):
 		
 		if next_char == ch:
 			selected_word = word
+			play_sound(1)
 			cur_letter_idx = 1
 			selected_word.set_next_character(cur_letter_idx)
 			return
