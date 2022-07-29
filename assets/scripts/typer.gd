@@ -1,6 +1,7 @@
 extends Node2D
 
 signal word_hit(w)
+signal finished_word(w)
 
 onready var pos_words_file = "res://assets/data/positive_adjectives.txt"
 var pos_words = {}
@@ -37,6 +38,10 @@ func _ready():
 func begin_game():
 	$Timer.start()
 	$Timer2.start()
+
+func pause_game():
+	$Timer.stop()
+	$Timer2.stop()
 
 func word_burst():
 	$Timer.wait_time = 2.2
@@ -80,14 +85,16 @@ func _unhandled_input(event):
 				if cur_letter_idx == word.length():
 					play_sound(2)
 					cur_letter_idx = -1
+					
+					emit_signal('finished_word',word)
+					
 					selected_word.queue_free()
 					selected_word = null
+					
 			else:
 				play_sound(0)
 				selected_word.stutter()
-				print('Type fail.')
 		
-
 
 func play_sound(success):
 	match(success):
@@ -106,7 +113,10 @@ func instantiate_word():
 	cur_words.add_child(loaded_word)
 	loaded_word.set_word(pos_words[n])
 	loaded_word.position.y = y
-	
+
+func clear_words():
+	for word in cur_words.get_children():
+		word.queue_free()
 
 func _on_Timer_timeout():
 	instantiate_word()
@@ -116,3 +126,6 @@ func _on_Timer2_timeout():
 
 func _on_StaticBody2D_area_entered(area):
 	emit_signal("word_hit",area.get_parent().get_word())
+#	selected_word.queue_free()
+	selected_word = null
+	cur_letter_idx = -1
