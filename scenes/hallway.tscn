@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/scripts/cell_manager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/cells/classroom_cell.tscn" type="PackedScene" id=2]
@@ -6,70 +6,12 @@
 [ext_resource path="res://scenes/cells/locker_cell.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/actors/unknown.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/actors/simon.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/sprites/flynn/flynn.png" type="Texture" id=8]
-[ext_resource path="res://assets/sprites/flynn/flynn_walk.png" type="Texture" id=9]
-[ext_resource path="res://assets/sprites/blocker/blur.png" type="Texture" id=10]
+[ext_resource path="res://scenes/actors/flynn.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/UI/dialogue_box.tscn" type="PackedScene" id=11]
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 9 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 9 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 9 )
-region = Rect2( 64, 64, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 9 )
-region = Rect2( 128, 64, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=13]
-animations = [ {
-"frames": [ ExtResource( 8 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 16 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-} ]
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 10 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 10 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 10 )
-region = Rect2( 32, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 10 )
-region = Rect2( 48, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=23]
-animations = [ {
-"frames": [ SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
-"loop": true,
-"name": "default",
-"speed": 8.0
-} ]
 
 [node name="CellManager" type="YSort"]
 script = ExtResource( 1 )
+freeplay = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 130, 70 )
@@ -77,45 +19,30 @@ current = true
 
 [node name="Cells" type="Node2D" parent="."]
 
-[node name="Cell 1" type="Node2D" parent="Cells"]
+[node name="Cell1" type="Node2D" parent="Cells"]
 
-[node name="ClassCell" parent="Cells/Cell 1" instance=ExtResource( 2 )]
+[node name="ClassCell" parent="Cells/Cell1" instance=ExtResource( 2 )]
 
-[node name="Unknown" parent="Cells/Cell 1" instance=ExtResource( 5 )]
+[node name="Unknown" parent="Cells/Cell1" instance=ExtResource( 5 )]
 position = Vector2( 124.054, 35 )
 
-[node name="Cell 2" type="Node2D" parent="Cells"]
+[node name="Cell2" type="Node2D" parent="Cells"]
 position = Vector2( 240, 0 )
 
-[node name="LockerCell" parent="Cells/Cell 2" instance=ExtResource( 4 )]
+[node name="LockerCell" parent="Cells/Cell2" instance=ExtResource( 4 )]
 
-[node name="Cell 3" type="Node2D" parent="Cells"]
+[node name="Cell3" type="Node2D" parent="Cells"]
 position = Vector2( 480, 0 )
 
-[node name="LockerCell Type 2" parent="Cells/Cell 3" instance=ExtResource( 3 )]
+[node name="LockerCell Type 2" parent="Cells/Cell3" instance=ExtResource( 3 )]
 
 [node name="Simon" parent="." instance=ExtResource( 6 )]
 
 [node name="AnimatedSprite" parent="Simon" index="0"]
 animation = "walk"
-frame = 4
 
-[node name="Flynn" type="Node2D" parent="."]
+[node name="Flynn" parent="." instance=ExtResource( 7 )]
 position = Vector2( 90, 60 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Flynn"]
-frames = SubResource( 13 )
-animation = "walk"
-playing = true
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Blocker" type="AnimatedSprite" parent="Flynn"]
-position = Vector2( 0, -12 )
-frames = SubResource( 23 )
-frame = 1
-playing = true
 
 [node name="Control" parent="." instance=ExtResource( 11 )]
 
