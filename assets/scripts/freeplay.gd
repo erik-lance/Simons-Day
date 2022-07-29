@@ -9,7 +9,7 @@ onready var type_game = $TypeHandler
 
 onready var cell_manager = $CellManager
 
-var cur_stage = 0
+var cur_stage = 1
 var cur_cell = 0
 
 # Stage Numbers
@@ -25,23 +25,34 @@ func _ready():
 	anim.play("begin_game")
 	type_game.connect("word_hit",self,'_on_word_hit')
 	type_game.connect("finished_word",self,'_on_finished_word')
-	cell_manager.connect("new_cell",self,'on_Cellmanager_new_cell')
+	cell_manager.connect("new_cell",self,'_on_CellManager_new_cell')
+	cell_manager.ready_freeplay()
+	
+	$Challenger.set_target(cell_manager.get_cur_cell().get_child(0).find_node('Challenger',true,false))
+	load_challenger()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
+# This loads the challenger
+func load_challenger():
+	$Challenger.set_new_hp(20 + cur_stage*5)
+
 func _on_word_hit(word):
 	print('BEEN HIT')
 	print(word)
 
 func _on_finished_word(word):
-	$Challenger.take_hit(word.size())
+	$Challenger.take_hit(word.length())
 	pass
 
 func _on_CellManager_new_cell(cell, cast):
+	print('new_cell!')
 	$Challenger.set_target(cast)
+	load_challenger()
+	type_game.begin_game()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name ==  'begin_game':
@@ -63,4 +74,9 @@ func _on_Challenger_defeated():
 
 	cur_stage += 1
 	cell_manager.set_walking(true)
+	print('target: ')
+	print($Challenger.get_target())
+	$Challenger.get_target().find_node("AnimationPlayer").play("walk_away")
+	type_game.clear_words()
+	type_game.pause_game()
 	
