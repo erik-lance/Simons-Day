@@ -144,12 +144,11 @@ tracks/1/keys = {
 }
 
 [node name="Unknown" type="Node2D"]
-position = Vector2( 186, 70 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 13 )
 animation = "idle"
-frame = 2
+frame = 5
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
