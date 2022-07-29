@@ -24,7 +24,7 @@ var speed = 30
 export (bool) var freeplay = true
 export (bool) var walking = true
 
-var stage_ahead = 3
+var stage_ahead = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,16 +38,20 @@ func _physics_process(delta):
 		cell_3.position.x -= speed*delta
 		
 		if cells[0].position.x <= -240:
-			print('pre: ')
-			print(cells)
 			var move_cell = cells.pop_front()
 			cells.append(move_cell)
+			
 			move_cell.position.x = cells[1].position.x + 240
 			load_cell(move_cell, rand_cell())
 			
+			emit_signal('new_cell',cells[0], cells[0].find_node('Challenger',true,false))
 			
-			print('post: ')
-			print(cells)
+			if freeplay: walking = false
+
+func ready_freeplay():
+	load_cell(cell_1,broken_cell, true)
+	load_cell(cell_2,locker_cell_1, true)
+	load_cell(cell_3,class_cell, true)
 
 func rand_cell():
 	var n = randi() % 5
@@ -60,13 +64,19 @@ func rand_cell():
 		4: return broken_cell
 	
 func clear_cell(cell):
-	cell.get_children()[0].queue_free()
+	print('what cell?')
+	print(cell)
+	for c in cell.get_child(0).get_children():
+		c.queue_free()
+	
+	cell.get_child(0).queue_free()
 
-# Loads cell at cell n with type c
-func load_cell(cell,c):
+# Loads cell at cell with type c
+func load_cell(cell,c,start=false):
 	var loaded_cell = load(c).instance()
 	
-	clear_cell(cell)
+	if !start:
+		clear_cell(cell)
 	cell.add_child(loaded_cell)
 	
 	if !freeplay:
@@ -75,13 +85,14 @@ func load_cell(cell,c):
 		add_actors(loaded_cell)
 		var cast = load_unknown(loaded_cell)
 		var challenger = load_challenger(loaded_cell, stage_ahead)
-		emit_signal('new_cell',cells[0], challenger)
+		
 
 func add_actors(cell):
-	var n = randi() % 5
-	
+	var n = randi() % 5+1
+	var z = 0
 	# Maximum of 5 actors
 	for i in n:
+		if z == n: return
 		var unk_actor = load_unknown(cell)
 		var x = randi() % 224 + 9
 		# from 9 to 233 inclusive
@@ -91,6 +102,7 @@ func add_actors(cell):
 		
 		unk_actor.position.x = x
 		unk_actor.position.y = y
+		z += 1
 
 func load_unknown(cell):
 	var loaded_cast = load(cast_unknown).instance()
@@ -111,6 +123,7 @@ func load_unknown(cell):
 	else:
 		loaded_cast.get_child(0).animation = 'idle'
 		loaded_cast.get_child(0).flip_h = true
+		loaded_cast.get_child(1).play ('idle')
 	
 	return loaded_cast
 
@@ -146,3 +159,6 @@ func load_challenger(cell, stage=4):
 
 func set_walking(t):
 	walking = t
+
+func get_cur_cell():
+	return cells[0]
