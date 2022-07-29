@@ -26,6 +26,7 @@ func _ready():
 	type_game.connect("word_hit",self,'_on_word_hit')
 	type_game.connect("finished_word",self,'_on_finished_word')
 	cell_manager.connect("new_cell",self,'_on_CellManager_new_cell')
+	cell_manager.connect("special_challenger",self,'_on_new_challenger')
 	cell_manager.ready_freeplay()
 	
 	$Challenger.set_target(cell_manager.get_cur_cell().get_child(0).find_node('Challenger',true,false))
@@ -52,7 +53,12 @@ func _on_CellManager_new_cell(cell, cast):
 	print('new_cell!')
 	$Challenger.set_target(cast)
 	load_challenger()
+	cell_manager.get_cur_cell_challenger()
 	type_game.begin_game()
+	$Simon.play('idle')
+
+func _on_new_challenger(type):
+	type_game.set_skill(type)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name ==  'begin_game':
@@ -74,6 +80,7 @@ func _on_Challenger_defeated():
 
 	cur_stage += 1
 	cell_manager.set_walking(true)
+	$Simon/AnimatedSprite.play('walk')
 	print('target: ')
 	print($Challenger.get_target())
 	$Challenger.get_target().find_node("AnimationPlayer").play("walk_away")
