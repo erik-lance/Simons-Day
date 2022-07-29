@@ -24,6 +24,8 @@ var lives = 3
 func _ready():
 	anim.play("begin_game")
 	type_game.connect("word_hit",self,'_on_word_hit')
+	type_game.connect("finished_word",self,'_on_finished_word')
+	cell_manager.connect("new_cell",self,'on_Cellmanager_new_cell')
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,11 +35,18 @@ func _ready():
 func _on_word_hit(word):
 	print('BEEN HIT')
 	print(word)
+
+func _on_finished_word(word):
+	$Challenger.take_hit(word.size())
 	pass
+
+func _on_CellManager_new_cell(cell, cast):
+	$Challenger.set_target(cast)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name ==  'begin_game':
 		$TypeHandler.begin_game()
+#		$Challenger.cur_target 
 
 func _on_Challenger_defeated():
 	# Since finished cell will loop back
@@ -53,4 +62,5 @@ func _on_Challenger_defeated():
 			cur_cell = 0
 
 	cur_stage += 1
+	cell_manager.set_walking(true)
 	
