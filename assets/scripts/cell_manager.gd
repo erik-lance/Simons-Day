@@ -1,6 +1,7 @@
 extends Node2D
 
 signal new_cell(cell, cast)
+signal special_challenger(type)
 
 var class_cell = "res://scenes/cells/classroom_cell.tscn"
 var locker_cell_1 = "res://scenes/cells/locker_cell.tscn"
@@ -18,6 +19,7 @@ var cur_cell = 0
 
 var cast_unknown = "res://scenes/actors/unknown.tscn"
 var cast_flynn = "res://scenes/actors/flynn.tscn"
+var cast_laura = "res://scenes/actors/laura.tscn"
 
 var speed = 30
 
@@ -64,8 +66,6 @@ func rand_cell():
 		4: return broken_cell
 	
 func clear_cell(cell):
-	print('what cell?')
-	print(cell)
 	for c in cell.get_child(0).get_children():
 		c.queue_free()
 	
@@ -83,12 +83,11 @@ func load_cell(cell,c,start=false):
 		add_actors(loaded_cell)
 	else:
 		add_actors(loaded_cell)
-		var cast = load_unknown(loaded_cell)
 		var challenger = load_challenger(loaded_cell, stage_ahead)
 		
 
 func add_actors(cell):
-	var n = randi() % 5+1
+	var n = randi() % 5
 	var z = 0
 	# Maximum of 5 actors
 	for i in n:
@@ -104,11 +103,11 @@ func add_actors(cell):
 		unk_actor.position.y = y
 		z += 1
 
-func load_unknown(cell):
+func load_unknown(cell,challenger=false):
 	var loaded_cast = load(cast_unknown).instance()
 	cell.add_child(loaded_cast)
 	
-	if !freeplay:
+	if !challenger:
 		var n = randi() % 2
 		match(n):
 			0: loaded_cast.get_child(0).animation = 'idle'
@@ -128,7 +127,15 @@ func load_unknown(cell):
 	return loaded_cast
 
 func load_special(cell):
-	var loaded_cast = load(cast_flynn).instance()
+	var loaded_cast = null
+	
+	
+	var n = randi() % 2
+	
+	match(n):
+		0:loaded_cast = load(cast_flynn).instance()
+		1: loaded_cast = load(cast_laura).instance()
+	
 	cell.add_child(loaded_cast)
 	
 	loaded_cast.get_child(0).animation = 'idle'
@@ -142,8 +149,7 @@ func load_challenger(cell, stage=4):
 	var cell_num = stage % 3
 	
 	if (stage+1) % 5 != 0:
-		actor = load_unknown(cell)
-		
+		actor = load_unknown(cell, true)
 		actor.position.x = 186
 		actor.position.y = 70
 		
@@ -162,3 +168,11 @@ func set_walking(t):
 
 func get_cur_cell():
 	return cells[0]
+
+func get_cur_cell_challenger():
+	var challenger_node = cells[0].get_child(0).find_node('Challenger',true,false)
+	match(challenger_node.get_child(0).name):
+		'Unknown': emit_signal('special_challenger',0)
+		'Flynn': emit_signal('special_challenger',1)
+		'Laura': emit_signal('special_challenger',2)
+		
