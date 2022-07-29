@@ -55,7 +55,7 @@ func _on_CellManager_new_cell(cell, cast):
 	load_challenger()
 	cell_manager.get_cur_cell_challenger()
 	type_game.begin_game()
-	$Simon.play('idle')
+	$Simon/AnimatedSprite.play('idle')
 
 func _on_new_challenger(type):
 	type_game.set_skill(type)
