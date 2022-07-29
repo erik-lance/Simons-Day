@@ -20,6 +20,9 @@ var sound_bank = {
 var selected_word = null
 var cur_letter_idx = -1
 
+var cur_skill = 0
+var skill_activate = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -48,6 +51,26 @@ func word_burst():
 	$Timer2.wait_time = 1.4
 	pass
 
+func flynn_boost(d=1):
+	for word in cur_words.get_children():
+		word.set_speed(word.get_orig_speed() + 15*d)
+	
+func laura_invis():
+	for word in cur_words.get_children():
+		word.get_anim_player().play('invis')
+
+func stop_abilities():
+	for word in cur_words.get_children():
+		word.return_orig_speed()
+		word.get_anim_player().play('idle')
+
+# 0 - None
+# 1 - Flynn
+# 2 - Laura
+func set_skill(s=0):
+	cur_skill = s
+	$Timer3.start()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -129,3 +152,19 @@ func _on_StaticBody2D_area_entered(area):
 #	selected_word.queue_free()
 	selected_word = null
 	cur_letter_idx = -1
+
+# Returns to normal
+func _on_Timer3_timeout():
+	print('SKILL!!!')
+	print(cur_skill)
+	if cur_skill > 0:
+		if !skill_activate:
+			match(cur_skill):
+				1: flynn_boost()
+				2: laura_invis()
+			$Timer3.start()
+		else:
+			stop_abilities()
+			$Timer3.start()
+
+		skill_activate = !skill_activate
