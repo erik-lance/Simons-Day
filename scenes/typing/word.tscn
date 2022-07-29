@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/scripts/word.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/DePixelBreit.ttf" type="DynamicFontData" id=2]
@@ -14,6 +14,39 @@ default_font = SubResource( 1 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 30, 10 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "invis"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="WordNode" type="Node2D"]
 script = ExtResource( 1 )
@@ -46,5 +79,9 @@ shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 4 )
+anims/invis = SubResource( 5 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
