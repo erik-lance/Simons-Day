@@ -51,6 +51,7 @@ func _on_word_hit(word):
 		health_bars.player_damage(word.length())
 		hp -= word.length()
 		if hp <= 0:
+			type_game.play_sound(5)
 			simon.get_child(0).play('fail')
 			type_game.pause_game()
 			type_game.clear_words()
