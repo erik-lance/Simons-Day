@@ -8,6 +8,9 @@ onready var anim = $AnimationPlayer
 onready var type_game = $TypeHandler
 
 onready var cell_manager = $CellManager
+onready var health_bars = $Intro/HBars
+
+onready var shader_window = $Intro/ShaderEffects
 
 var cur_stage = 1
 var cur_cell = 0
@@ -28,29 +31,26 @@ func _ready():
 	cell_manager.connect("new_cell",self,'_on_CellManager_new_cell')
 	cell_manager.connect("special_challenger",self,'_on_new_challenger')
 	cell_manager.ready_freeplay()
+	health_bars.ready_player_bar(hp)
 	
 	$Challenger.set_target(cell_manager.get_cur_cell().get_child(0).find_node('Challenger',true,false))
 	load_challenger()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	
+	
 
 # This loads the challenger
 func load_challenger():
-	$Challenger.set_new_hp(20 + cur_stage*5)
+	var hp = 20 + cur_stage*5
+	$Challenger.set_new_hp(hp)
+	health_bars.ready_enemy_bar(hp)
 
 func _on_word_hit(word):
-	print('BEEN HIT')
-	print(word)
+	health_bars.player_damage(word.length())
 
 func _on_finished_word(word):
 	$Challenger.take_hit(word.length())
-	pass
 
 func _on_CellManager_new_cell(cell, cast):
-	print('new_cell!')
 	$Challenger.set_target(cast)
 	load_challenger()
 	cell_manager.get_cur_cell_challenger()
@@ -58,7 +58,7 @@ func _on_CellManager_new_cell(cell, cast):
 	$Simon/AnimatedSprite.play('idle')
 
 func _on_new_challenger(type):
-	type_game.set_skill(type)
+	type_game.set_skill(type, cur_stage, shader_window)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name ==  'begin_game':
@@ -87,3 +87,9 @@ func _on_Challenger_defeated():
 	type_game.clear_words()
 	type_game.pause_game()
 	
+	health_bars.enemy_empty()
+	
+
+
+func _on_Challenger_damage(d):
+	health_bars.enemy_damage(d)
