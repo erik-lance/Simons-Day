@@ -17,6 +17,8 @@ var sound_bank = {
 	deep_hit = load("res://assets/audio/deep_hit.wav")
 }
 
+var cur_speed = 10
+
 var selected_word = null
 var cur_letter_idx = -1
 
@@ -93,6 +95,11 @@ func set_skill(s=0, d=1, fx=null):
 	cur_stage = d
 	shader = fx
 	
+	if d < 10:
+		cur_speed += d/2
+	else:
+		cur_speed += d/5
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -146,9 +153,11 @@ func play_sound(success):
 		0: audio.stream = sound_bank.bad
 		1: audio.stream = sound_bank.good
 		2: audio.stream = sound_bank.done
+		3: audio.stream = sound_bank.small_hit
+		4: audio.stream = sound_bank.deep_hit
 	audio.play()
 
-func instantiate_word():
+func instantiate_word(s=cur_speed):
 	var n = randi() % 960
 	var y = randi() % 50 + 1
 	var x = 256
@@ -157,6 +166,7 @@ func instantiate_word():
 	var loaded_word = load("res://scenes/typing/word.tscn").instance()
 	cur_words.add_child(loaded_word)
 	loaded_word.set_word(pos_words[n])
+	loaded_word.set_orig_speed(s)
 	loaded_word.position.y = y
 
 func clear_words():
@@ -176,11 +186,10 @@ func _on_StaticBody2D_area_entered(area):
 	cur_letter_idx = -1
 	
 	area.get_parent().queue_free()
+	play_sound(3)
 
 # Returns to normal
 func _on_Timer3_timeout():
-	print('SKILL!!!')
-	print(cur_skill)
 	if cur_skill > 0:
 		if !skill_activate:
 			match(cur_skill):
