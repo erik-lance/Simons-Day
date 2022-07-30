@@ -1,5 +1,7 @@
 extends Node2D
 
+signal game_done(r)
+var game_result = 0
 
 onready var simon = $Simon
 onready var person_slot = $Challenger
@@ -45,7 +47,16 @@ func load_challenger():
 	health_bars.ready_enemy_bar(hp)
 
 func _on_word_hit(word):
-	health_bars.player_damage(word.length())
+	if hp > 0:
+		health_bars.player_damage(word.length())
+		hp -= word.length()
+		if hp <= 0:
+			simon.get_child(0).play('fail')
+			type_game.pause_game()
+			type_game.clear_words()
+			
+			game_result = health_bars.get_score()
+			$Timer.start()
 
 func _on_finished_word(word):
 	$Challenger.take_hit(word.length())
@@ -93,3 +104,7 @@ func _on_Challenger_defeated():
 
 func _on_Challenger_damage(d):
 	health_bars.enemy_damage(d)
+
+
+func _on_Timer_timeout():
+	emit_signal('game_done',game_result)
