@@ -18,7 +18,9 @@ func _ready():
 func get_anim_player(): return $AnimationPlayer
 func return_orig_speed(): speed = orig_speed
 func get_orig_speed(): return orig_speed
-func set_orig_speed(s): orig_speed = s
+func set_orig_speed(s): 
+	orig_speed = s
+	speed = s
 func set_speed(s): speed = s
 
 func get_word(): return word
