@@ -25,4 +25,5 @@ func _on_Continue_button_up():
 
 
 func _on_MainMenu_button_up():
+	get_tree().paused = false
 	emit_signal('btn','menu')

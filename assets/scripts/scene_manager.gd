@@ -4,7 +4,7 @@ onready var cur_scene_node = $CurrentScene
 
 var cur_scene
 var scenes = {
-	menu = "res://scenes/main_menu.tscn",
+	menu = "res://scenes/menu_scene.tscn",
 	start = "res://scenes/hallway.tscn",
 	tutorial = "res://scenes/tutorial.tscn",
 	freeplay = "res://scenes/freeplay.tscn",
@@ -53,10 +53,13 @@ func load_scene(scene):
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 	elif scene == scenes.freeplay:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
+		loaded_scene.find_node('Pause').connect('btn',self,'_on_signal_scene')
 		loaded_scene.connect('game_done',self,'game_done')
 	elif scene == scenes.score:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 		return loaded_scene
+	else:
+		print('Missing scene! '+str(scene))
 
 func game_done(r):
 	var score_scene = load_scene(scenes.score)
