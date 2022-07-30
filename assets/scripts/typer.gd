@@ -23,6 +23,9 @@ var cur_letter_idx = -1
 var cur_skill = 0
 var skill_activate = false
 
+var cur_stage = 0
+var shader = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -52,24 +55,43 @@ func word_burst():
 	pass
 
 func flynn_boost(d=1):
+	var multiplier = 15 + d*0.2
 	for word in cur_words.get_children():
-		word.set_speed(word.get_orig_speed() + 15*d)
+		word.set_speed(word.get_orig_speed() + multiplier)
 	
-func laura_invis():
+func laura_invis(d=1):
 	for word in cur_words.get_children():
 		word.get_anim_player().play('invis')
+	
+	# Tween
+	var tween = shader.get_child(0)
+	tween.interpolate_property(shader.get_material(),"shader_param/multiplier",0.2,-0.5,2)
+	tween.start()
+
+
+func _on_Tween_tween_completed(object, key):
+	# Tween
+	if (shader.get_material().get_shader_param("multiplier")!= 0.2):
+		var tween = shader.get_child(0)
+		tween.interpolate_property(shader.get_material(),"shader_param/multiplier",null,0.2,2)
+		tween.start()
+
 
 func stop_abilities():
 	for word in cur_words.get_children():
 		word.return_orig_speed()
 		word.get_anim_player().play('idle')
+	
+	shader.get_material().set_shader_param("multiplier",0.2)
 
 # 0 - None
 # 1 - Flynn
 # 2 - Laura
-func set_skill(s=0):
+func set_skill(s=0, d=1, fx=null):
 	cur_skill = s
 	$Timer3.start()
+	cur_stage = d
+	shader = fx
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -117,7 +139,7 @@ func _unhandled_input(event):
 			else:
 				play_sound(0)
 				selected_word.stutter()
-		
+
 
 func play_sound(success):
 	match(success):
@@ -152,6 +174,8 @@ func _on_StaticBody2D_area_entered(area):
 #	selected_word.queue_free()
 	selected_word = null
 	cur_letter_idx = -1
+	
+	area.get_parent().queue_free()
 
 # Returns to normal
 func _on_Timer3_timeout():
@@ -160,11 +184,12 @@ func _on_Timer3_timeout():
 	if cur_skill > 0:
 		if !skill_activate:
 			match(cur_skill):
-				1: flynn_boost()
-				2: laura_invis()
+				1: flynn_boost(cur_stage)
+				2: laura_invis(cur_stage)
 			$Timer3.start()
 		else:
 			stop_abilities()
 			$Timer3.start()
 
 		skill_activate = !skill_activate
+
