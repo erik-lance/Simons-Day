@@ -48,4 +48,5 @@ func load_scene(scene):
 	
 	if scene == scenes.menu or scene == scenes.settings:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
-	
+	elif scene == scenes.freeplay:
+		loaded_scene.connect('btn',self,'_on_signal_scene')
