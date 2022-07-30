@@ -3,7 +3,7 @@ extends TextureRect
 signal btn(s)
 
 func _on_Start_button_up():
-	emit_signal("btn", 'start')
+	emit_signal("btn", 'tutorial')
 
 func _on_Freeplay_button_up():
 	emit_signal("btn", 'freeplay')

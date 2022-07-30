@@ -6,6 +6,7 @@ var cur_scene
 var scenes = {
 	menu = "res://scenes/main_menu.tscn",
 	start = "res://scenes/hallway.tscn",
+	tutorial = "res://scenes/tutorial.tscn",
 	freeplay = "res://scenes/freeplay.tscn",
 	settings = "res://scenes/settings.tscn",
 	score = "res://scenes/score.tscn"
@@ -29,6 +30,7 @@ func _on_signal_scene(s):
 		'menu': cur_signal_scene = scenes.menu
 		'start': cur_signal_scene = scenes.start
 		'freeplay': cur_signal_scene = scenes.freeplay
+		'tutorial': cur_signal_scene = scenes.tutorial
 		'score': cur_signal_scene = scenes.score
 		'settings': cur_signal_scene = scenes.settings
 		'quit': get_tree().quit()
@@ -46,6 +48,8 @@ func load_scene(scene):
 	cur_scene_node.add_child(loaded_scene)
 	
 	if scene == scenes.menu or scene == scenes.settings:
+		loaded_scene.connect('btn',self,'_on_signal_scene')
+	elif scene == scenes.tutorial:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 	elif scene == scenes.freeplay:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
