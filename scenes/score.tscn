@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/fonts/DePixelBreit.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/UI/ButtonBG.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/scripts/score.gd" type="Script" id=3]
+[ext_resource path="res://themes/menu_btn.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/sprites/menu.png" type="Texture" id=6]
+[ext_resource path="res://assets/fonts/Daydream.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 7
+outline_size = 1
+outline_color = Color( 0.207843, 0.180392, 0.239216, 1 )
+extra_spacing_bottom = -2
+extra_spacing_space = -1
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 12
+outline_size = 1
+outline_color = Color( 0.207843, 0.180392, 0.239216, 1 )
+font_data = ExtResource( 7 )
+
+[node name="Score" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="SettingsMenu" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 256.0
+margin_bottom = 144.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="SettingsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.678431, 0.411765, 0.235294, 0.521569 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/ColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -99.0
+margin_top = -61.0
+margin_right = 99.0
+margin_bottom = 49.0
+custom_constants/separation = 7
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Congrats" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_right = 198.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 1 )
+text = "Thanks for trying out Simon's day and helping him overcome the vast amount of people he has to talk to every day!"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Congrats2" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_top = 31.0
+margin_right = 198.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+text = "You managed to reach:"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Score" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_top = 44.0
+margin_right = 198.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 2 )
+text = "0 people!"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Final" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_top = 68.0
+margin_right = 198.0
+margin_bottom = 92.0
+custom_fonts/font = SubResource( 1 )
+text = "Thank you so much again!:) although I got sick for the latter half of  the jam, I'm proud with what I've got so far!"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ButtonBG" parent="SettingsMenu/ColorRect" instance=ExtResource( 2 )]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -84.0
+margin_top = -21.0
+margin_right = -6.0
+margin_bottom = -4.0
+
+[node name="Button" type="Button" parent="SettingsMenu/ColorRect/ButtonBG"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -11.0
+margin_right = 40.0
+margin_bottom = 11.0
+custom_fonts/font = ExtResource( 5 )
+text = "Main Menu"
+flat = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="button_up" from="SettingsMenu/ColorRect/ButtonBG/Button" to="." method="_on_Button_button_up"]

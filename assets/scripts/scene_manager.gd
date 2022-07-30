@@ -1,16 +1,14 @@
 extends Node2D
 
-
 onready var cur_scene_node = $CurrentScene
-
-var freeplay_scene = "res://scenes/freeplay.tscn"
 
 var cur_scene
 var scenes = {
 	menu = "res://scenes/main_menu.tscn",
 	start = "res://scenes/hallway.tscn",
 	freeplay = "res://scenes/freeplay.tscn",
-	settings = "res://scenes/settings.tscn"
+	settings = "res://scenes/settings.tscn",
+	score = "res://scenes/score.tscn"
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +29,7 @@ func _on_signal_scene(s):
 		'menu': cur_signal_scene = scenes.menu
 		'start': cur_signal_scene = scenes.start
 		'freeplay': cur_signal_scene = scenes.freeplay
+		'score': cur_signal_scene = scenes.score
 		'settings': cur_signal_scene = scenes.settings
 		'quit': get_tree().quit()
 	
@@ -50,3 +49,11 @@ func load_scene(scene):
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 	elif scene == scenes.freeplay:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
+		loaded_scene.connect('game_done',self,'game_done')
+	elif scene == scenes.score:
+		loaded_scene.connect('btn',self,'_on_signal_scene')
+		return loaded_scene
+
+func game_done(r):
+	var score_scene = load_scene(scenes.score)
+	score_scene.set_score(r)
