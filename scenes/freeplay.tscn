@@ -1,13 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://scenes/cells/broken_cell.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/UI/pause_menu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/actors/simon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/actors/unknown.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/UI/HBars.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/scripts/freeplay.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/Daydream.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://scenes/typing/typing_game.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/cells/classroom_cell.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/cells/locker_cell_2.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/scripts/cell_manager.gd" type="Script" id=9]
 [ext_resource path="res://assets/scripts/opponent.gd" type="Script" id=10]
 
@@ -173,35 +171,24 @@ walking = false
 
 [node name="Cell1" type="Node2D" parent="CellManager/Cells"]
 
-[node name="BrokenCell" parent="CellManager/Cells/Cell1" instance=ExtResource( 1 )]
-
 [node name="Cell2" type="Node2D" parent="CellManager/Cells"]
 position = Vector2( 240, 0 )
-
-[node name="LockerCell Type 2" parent="CellManager/Cells/Cell2" instance=ExtResource( 8 )]
 
 [node name="Cell3" type="Node2D" parent="CellManager/Cells"]
 position = Vector2( 480, 0 )
 
-[node name="ClassCell" parent="CellManager/Cells/Cell3" instance=ExtResource( 7 )]
-
-[node name="Simon" parent="." instance=ExtResource( 2 )]
-
-[node name="AnimatedSprite" parent="Simon" index="0"]
-frame = 1
-
 [node name="Challenger" type="Node2D" parent="."]
 position = Vector2( 186, 70 )
 script = ExtResource( 10 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Unknown" parent="Challenger" instance=ExtResource( 3 )]
-position = Vector2( 0, 0 )
-
-[node name="AnimatedSprite" parent="Challenger/Unknown" index="0"]
-frame = 2
-flip_h = true
+[node name="Timer" type="Timer" parent="Challenger"]
 
 [node name="TypeHandler" parent="." instance=ExtResource( 6 )]
+
+[node name="Simon" parent="." instance=ExtResource( 2 )]
 
 [node name="Intro" type="CanvasLayer" parent="."]
 
@@ -229,10 +216,12 @@ text = "start"
 align = 1
 valign = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Glitch" type="ColorRect" parent="Intro"]
+visible = false
 material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -242,15 +231,25 @@ material = SubResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="Tween" type="Tween" parent="Intro/ShaderEffects"]
+
+[node name="HBars" parent="Intro" instance=ExtResource( 3 )]
+
+[node name="Pause" parent="Intro" instance=ExtResource( 1 )]
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/begin_game = SubResource( 2 )
 anims/waiting = SubResource( 3 )
 
+[connection signal="damage" from="Challenger" to="." method="_on_Challenger_damage"]
 [connection signal="defeated" from="Challenger" to="." method="_on_Challenger_defeated"]
+[connection signal="timeout" from="Challenger/Timer" to="Challenger" method="_on_Timer_timeout"]
+[connection signal="tween_completed" from="Intro/ShaderEffects/Tween" to="TypeHandler" method="_on_Tween_tween_completed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 
 [editable path="Simon"]
-[editable path="Challenger/Unknown"]
