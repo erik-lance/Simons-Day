@@ -21,7 +21,7 @@ var cast_unknown = "res://scenes/actors/unknown.tscn"
 var cast_flynn = "res://scenes/actors/flynn.tscn"
 var cast_laura = "res://scenes/actors/laura.tscn"
 
-var speed = 30
+var speed = 60
 
 export (bool) var freeplay = true
 export (bool) var walking = true
@@ -130,7 +130,7 @@ func load_special(cell):
 	var loaded_cast = null
 	
 	
-	var n = randi() % 2
+	var n = stage_ahead % 2
 	
 	match(n):
 		0:loaded_cast = load(cast_flynn).instance()
