@@ -12,6 +12,8 @@
 size = 12
 outline_size = 1
 outline_color = Color( 0.207843, 0.180392, 0.239216, 1 )
+extra_spacing_top = -1
+extra_spacing_bottom = -1
 font_data = ExtResource( 2 )
 
 [node name="Settings" type="Node2D"]
@@ -47,77 +49,78 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -79.0
-margin_top = -55.0
+margin_top = -61.0
 margin_right = 79.0
 margin_bottom = 55.0
 custom_constants/separation = 0
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="MasterLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
 margin_right = 158.0
-margin_bottom = 13.0
+margin_bottom = 11.0
 custom_fonts/font = SubResource( 1 )
 text = "Master"
 align = 1
 valign = 1
 
 [node name="Master" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 13.0
+margin_top = 11.0
 margin_right = 158.0
-margin_bottom = 29.0
+margin_bottom = 27.0
 theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
 [node name="MusicLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 29.0
+margin_top = 27.0
 margin_right = 158.0
-margin_bottom = 42.0
+margin_bottom = 38.0
 custom_fonts/font = SubResource( 1 )
 text = "Music"
 align = 1
 valign = 1
 
 [node name="Music" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 42.0
+margin_top = 38.0
 margin_right = 158.0
-margin_bottom = 58.0
+margin_bottom = 54.0
 theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
 [node name="SFXLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 58.0
+margin_top = 54.0
 margin_right = 158.0
-margin_bottom = 71.0
+margin_bottom = 65.0
 custom_fonts/font = SubResource( 1 )
 text = "SFX"
 align = 1
 valign = 1
 
 [node name="SFX" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 71.0
+margin_top = 65.0
 margin_right = 158.0
-margin_bottom = 87.0
+margin_bottom = 81.0
 theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
 [node name="EasyHardLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 87.0
+margin_top = 81.0
 margin_right = 158.0
-margin_bottom = 100.0
+margin_bottom = 92.0
 custom_fonts/font = SubResource( 1 )
 text = "Easy / Hard"
 align = 1
 valign = 1
 
 [node name="EasyHard" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
-margin_top = 100.0
+margin_top = 92.0
 margin_right = 158.0
-margin_bottom = 116.0
+margin_bottom = 108.0
 theme = ExtResource( 3 )
 max_value = 1.0
 rounded = true
@@ -127,10 +130,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -84.0
-margin_top = -21.0
-margin_right = -6.0
-margin_bottom = -4.0
+margin_left = -81.0
+margin_top = -20.0
+margin_right = -3.0
+margin_bottom = -3.0
 
 [node name="Button" type="Button" parent="SettingsMenu/ColorRect/ButtonBG"]
 anchor_left = 0.5
