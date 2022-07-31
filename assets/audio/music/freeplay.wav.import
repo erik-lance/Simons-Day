@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/freeplay.wav-7da71a8a059273913a90b85b2fdeb5fa.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/freeplay.wav"
+dest_files=[ "res://.import/freeplay.wav-7da71a8a059273913a90b85b2fdeb5fa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
