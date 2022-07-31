@@ -57,7 +57,8 @@ func word_burst():
 	pass
 
 func flynn_boost(d=1):
-	var multiplier = 15 + d*0.2
+	var multiplier = 15 + d/2
+	if d > 15: multiplier = 20
 	for word in cur_words.get_children():
 		word.set_speed(word.get_orig_speed() + multiplier)
 	
@@ -97,8 +98,8 @@ func set_skill(s=0, d=1, fx=null):
 	
 	if d < 10:
 		cur_speed += d/2
-	else:
-		cur_speed += d/5
+	elif d < 50:
+		cur_speed += d/100
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

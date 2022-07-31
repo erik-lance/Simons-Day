@@ -42,7 +42,7 @@ func _ready():
 
 # This loads the challenger
 func load_challenger():
-	var hp = 20 + cur_stage*5
+	var hp = 20 + cur_stage/5
 	$Challenger.set_new_hp(hp)
 	health_bars.ready_enemy_bar(hp)
 
