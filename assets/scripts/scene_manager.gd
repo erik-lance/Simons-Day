@@ -46,6 +46,10 @@ func load_scene(scene):
 	
 	var loaded_scene = load(scene).instance()
 	cur_scene_node.add_child(loaded_scene)
+	if  scene == scenes.freeplay:
+		$AudioManager.play_game()
+	elif scene == scenes.score:
+		$AudioManager.play_menu()
 	
 	if scene == scenes.menu or scene == scenes.settings:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
