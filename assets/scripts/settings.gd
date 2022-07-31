@@ -1,6 +1,7 @@
 extends Node2D
 
 signal btn(s)
+signal difficulty(d)
 
 onready var master_slider = $SettingsMenu/ColorRect/VBoxContainer/Master
 onready var music_slider=  $SettingsMenu/ColorRect/VBoxContainer/Music
@@ -25,3 +26,9 @@ func _on_SFX_value_changed(value):
 
 func _on_Button_button_up():
 	emit_signal('btn','menu')
+
+func diff_slider(d):
+	$SettingsMenu/ColorRect/VBoxContainer/EasyHard.value = d
+
+func _on_EasyHard_value_changed(value):
+	emit_signal('difficulty',value)

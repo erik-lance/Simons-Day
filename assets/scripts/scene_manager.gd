@@ -12,6 +12,12 @@ var scenes = {
 	score = "res://scenes/score.tscn"
 }
 
+var hard_mode = false
+
+func set_difficulty(d):
+	if d == 0: hard_mode = false
+	elif d == 1: hard_mode = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cur_scene = scenes.menu
@@ -51,7 +57,11 @@ func load_scene(scene):
 	elif scene == scenes.score:
 		$AudioManager.play_menu()
 	
-	if scene == scenes.menu or scene == scenes.settings:
+	if scene == scenes.menu :
+		loaded_scene.connect('btn',self,'_on_signal_scene')
+	elif scene == scenes.settings:
+		loaded_scene.connect('difficulty',self,'set_difficulty')
+		loaded_scene.diff_slider(int(hard_mode))
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 	elif scene == scenes.tutorial:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
@@ -59,6 +69,8 @@ func load_scene(scene):
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 		loaded_scene.find_node('Pause').connect('btn',self,'_on_signal_scene')
 		loaded_scene.connect('game_done',self,'game_done')
+		if (hard_mode): loaded_scene.hard_mode()
+		
 	elif scene == scenes.score:
 		loaded_scene.connect('btn',self,'_on_signal_scene')
 		return loaded_scene

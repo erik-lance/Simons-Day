@@ -31,7 +31,7 @@ func player_damage(d):
 	$HBoxContainer/PlayerBox/PlayerBar/Tween.start()
 
 func player_empty():
-	$HBoxContainer/PlayerBox/PlayerBar/Tween.interpolate_property(p_bar,"value",null, 0,0.5)
+	$HBoxContainer/PlayerBox/PlayerBar/Tween.interpolate_property(p_bar,"value",null, 0,0.2)
 	$HBoxContainer/PlayerBox/PlayerBar/Tween.start()
 
 # Enemy increase satisfaction therefore it is reversed

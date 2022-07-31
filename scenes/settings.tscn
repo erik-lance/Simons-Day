@@ -105,6 +105,23 @@ theme = ExtResource( 3 )
 min_value = -80.0
 max_value = 6.0
 
+[node name="EasyHardLabel" type="Label" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_top = 87.0
+margin_right = 158.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 1 )
+text = "Easy / Hard"
+align = 1
+valign = 1
+
+[node name="EasyHard" type="HSlider" parent="SettingsMenu/ColorRect/VBoxContainer"]
+margin_top = 100.0
+margin_right = 158.0
+margin_bottom = 116.0
+theme = ExtResource( 3 )
+max_value = 1.0
+rounded = true
+
 [node name="ButtonBG" parent="SettingsMenu/ColorRect" instance=ExtResource( 5 )]
 anchor_left = 1.0
 anchor_top = 1.0
@@ -138,4 +155,5 @@ bus = "SFX"
 [connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/Master" to="." method="_on_Master_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/Music" to="." method="_on_Music_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/SFX" to="." method="_on_SFX_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/ColorRect/VBoxContainer/EasyHard" to="." method="_on_EasyHard_value_changed"]
 [connection signal="button_up" from="SettingsMenu/ColorRect/ButtonBG/Button" to="." method="_on_Button_button_up"]

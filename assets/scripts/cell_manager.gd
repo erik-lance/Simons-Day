@@ -50,6 +50,9 @@ func _physics_process(delta):
 			
 			if freeplay: walking = false
 
+func add_stage(s):
+	stage_ahead += s
+
 func ready_freeplay():
 	load_cell(cell_1,broken_cell, true)
 	load_cell(cell_2,locker_cell_1, true)
